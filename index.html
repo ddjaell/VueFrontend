@@ -1,0 +1,365 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        
+        <div id="app">
+            {{ message }}
+        </div>
+
+        <div id="app-2">
+            <span v-bind:title="message">
+              Hover your mouse over me for a few seconds
+              to see my dynamically bound title!
+            </span>
+          </div>
+
+          <div id="app-3">
+            <span v-if="seen"> Now you see me</span>
+          </div>
+
+          <div id="app-4">
+            <ol>
+              <li v-for="todo in todos">
+                {{ todo.text }}
+              </li>
+            </ol>
+          </div>
+
+          <div id="app-5">
+            <p>{{ message }}</p>
+            <button v-on:click="reverseMessage">Reverse Message</button>
+          </div>
+
+          <div id="app-6">
+            <p>{{ message }}</p>
+            <input v-model="message">
+          </div>
+
+
+          <div id="app-7">
+            <ol>
+              <!--
+                Now we provide each todo-item with the todo object
+                it's representing, so that its content can be dynamic.
+                We also need to provide each component with a "key",
+                which will be explained later.
+              -->
+              <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+              ></todo-item>
+            </ol>
+          </div>
+          <div id="vm">
+            {{a}}
+          </div>
+
+        <div id="example">
+          <p>Original message: "{{message}}"</p>
+          <p>Computed reversed message: "{{reversedMessage}}"</p>
+
+        </div>
+
+        <div id = "example2">
+          {{x}} {{y}} {{z}}
+
+        </div>
+
+        <div id="demo">
+          {{fullname}}
+
+        </div>
+
+        <div id="watch-example">
+          <p>
+            Ask a yes/no question: <input v-model="question">
+
+          </p>
+          <p>{{answer}}</p>
+        </div>
+
+
+        <!--
+          Event Handling
+        -->
+        <div id = "eventExam-1">
+          <button v-on:click="counter += 1">Add 1</button>
+          <p>The button above has been clicked {{counter}} times. </p>
+        </div>
+
+        <div id = "eventExam-2">
+          <button v-on:click="greet">Greet</button>
+        </div>
+        
+        <div id = "eventExam-3">
+          <button v-on:click="say('hi')">Say {{msg}}</button>
+          <button v-on:click="say('Hello')">Say {{msg}}</button>
+          <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+              Submit
+          </button>
+          <input v-model="message" placeholder = "edit me">
+          <p>Message is : {{message}}</p>
+          <span>Multiline message is:</span>
+            <p style="white-space: pre-line;">{{ message }}</p>
+          <br>
+            <textarea v-model="message" placeholder="add multiple lines"></textarea>
+            <br>
+            <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">{{ checked }}</label>
+        </div>
+        <div id='example-3'>
+            <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+            <label for="jack">Jack</label>
+            <input type="checkbox" id="john" value="John" v-model="checkedNames">
+            <label for="john">John</label>
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+            <label for="mike">Mike</label>
+            <br>
+            <span>Checked names: {{ checkedNames }}</span>
+          </div>
+        
+          
+        <script src="index.js"></script>
+        <script src="VueInstance.js"></script>
+    </body>
+    <script>
+      //Object.freeze(vm);
+    //console.log(app.message)
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script>
+      new Vue({
+        el: '#example-3',
+        data: {
+          checkedNames: []
+        }
+})
+    var eventVar3 = new Vue({
+      el:"#eventExam-3",
+      data: {
+        msg : "",
+        message : "",
+        checked : false
+      },
+      methods : {
+        say: function(evt)
+        {
+          alert(evt);
+          this.msg = evt;
+        },
+
+        warn: function (message, event) {
+        // now we have access to the native event
+          if (event) event.preventDefault()
+          alert(message)
+        }
+      }
+    })
+    var eventVar2 = new Vue({
+      el:"#eventExam-2",
+      data : {
+        name : "Vue.js"
+      },
+      methods:{
+        greet: function(event){
+          alert('hello' + this.name)
+          if(event)
+          {
+            alert(event.target.tagName)
+          }
+        }
+      }
+    })
+    var eventVar = new Vue(
+      {
+        el:"#eventExam-1",
+        data : {
+          counter : 0
+        }
+      }
+
+    )
+    var app = new Vue({ 
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    });
+    
+     var app2 = new Vue({
+        el: '#app-2',
+        data: {
+          message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+      });
+    
+      var app3 = new Vue({
+        el: '#app-3',
+        data:{
+            seen: false
+        }
+      
+    
+    
+    } );
+    
+    var app4 = new Vue({
+        el: '#app-4',
+        data: {
+          todos: [
+            { text: 'Learn JavaScript' },
+            { text: 'Learn Vue' },
+            { text: 'Build something awesome' }
+          ]
+        }
+      })
+    
+    
+      var app5 = new Vue({
+        el: '#app-5',
+        data: {
+          message: 'Hello Vue.js!'
+        },
+        methods: {
+          reverseMessage: function () {
+            this.message = this.message.split('').reverse().join('')
+          }
+        }
+      })
+    
+      var app6 = new Vue({
+        el: '#app-6',
+        data: {
+          message: 'Hello Vue!'
+        }
+      })
+    
+      Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{ todo.text }}</li>'
+      })
+      
+      var app7 = new Vue({
+        el: '#app-7',
+        data: {
+          groceryList: [
+            { id: 0, text: 'Vegetables' },
+            { id: 1, text: 'Cheese' },
+            { id: 2, text: 'Whatever else humans are supposed to eat' }
+          ]
+        }
+      })
+    
+      var app8 = new Vue(
+          {
+              el : "#example",
+              data : {
+                  message : 'Hello'
+              },
+              computed: {
+                  reversedMessage : function ()
+                  {
+                      return this.message.split('').reverse().join('')
+                  }
+              }
+          }
+    
+    
+      )
+    
+      var names = new Vue({
+        el : "#demo",
+        data :{
+            firstname : "JAEYOUNG",
+            lastname : "LEE"
+        },
+        computed :{ 
+            fullname : function()
+            {
+                return this.firstname + " " + this.lastname
+            }
+        }
+      })
+    
+      var example2 = new Vue({
+          el : "#example2",
+          data: {
+            y: 'y'
+          },
+          
+          created: function() {
+            // 3초후에 y값을 바꾼다.
+            setTimeout(()=> this.y='kill bill', 3000);
+          },
+        
+          computed: {
+            x: function () {
+              console.log('x open');
+              return this.y;
+            }
+          },
+        
+          watch: {
+            y: function (newVal, oldVal) {
+              console.log('y open');
+              return this.y;
+            }
+          },
+        
+          methods: {
+            z: function() {
+              console.log('z open');
+              return 'z';
+            }
+          }
+      })
+    
+      var watchExampleVM = new Vue({
+        el: '#watch-example',
+        data: {
+          question: '',
+          answer: 'I cannot give you an answer until you ask a question!'
+        },
+        watch: {
+          // whenever question changes, this function will run
+          question: function (newQuestion, oldQuestion) {
+            this.answer = 'Waiting for you to stop typing...'
+            this.debouncedGetAnswer()
+          }
+        },
+        created: function () {
+          // _.debounce is a function provided by lodash to limit how
+          // often a particularly expensive operation can be run.
+          // In this case, we want to limit how often we access
+          // yesno.wtf/api, waiting until the user has completely
+          // finished typing before making the ajax request. To learn
+          // more about the _.debounce function (and its cousin
+          // _.throttle), visit: https://lodash.com/docs#debounce
+          this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+        },
+        methods: {
+          getAnswer: function () {
+            if (this.question.indexOf('?') === -1) {
+              this.answer = 'Questions usually contain a question mark. ;-)'
+              return
+            }
+            this.answer = 'Thinking...'
+            var vm = this
+            axios.get('https://yesno.wtf/api')
+              .then(function (response) {
+                vm.answer = _.capitalize(response.data.answer)
+              })
+              .catch(function (error) {
+                vm.answer = 'Error! Could not reach the API. ' + error
+              })
+          }
+        }
+      })
+    </script>
+    
+</html>

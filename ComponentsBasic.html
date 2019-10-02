@@ -1,0 +1,33 @@
+<html>
+        <head>
+                <link rel="stylesheet" href="index.css">
+                <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        </head>
+        <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+        <body>  
+                <div id="components-demo">
+                        <button-counter></button-counter>
+                        <button-counter></button-counter>
+                        <button-counter></button-counter>
+                </div>
+
+
+        </body>
+        <script>
+            Vue.component('button-counter', {
+                data: function () {
+                return {
+                    count: 0
+                     }
+                },
+              template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+            })
+            var exam = new Vue({
+                el : '#components-demo'
+            })
+        
+        
+        
+        </script>
+</html>
